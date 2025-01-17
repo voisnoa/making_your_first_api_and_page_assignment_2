@@ -2,6 +2,65 @@
 const express = require('express');
 const app = express();
 
+app.get("/status-info",(req,res)=>{
+  console.log(req.query)
+
+  let msg;
+
+  switch(req.query.code){
+    case "200":
+      msg = "Request was successful.";
+      break;
+    case "201":
+      msg = "A resource has been successfully created.";
+      break;
+    case "204":
+      msg = "No Content: The server successfully processed the request, but no content is returned.";
+      break;
+    case "400":
+      msg = "Bad Request: The request could not be understood or was missing required parameters.";
+      break;
+    case "401":
+      msg = "Unauthorized: The request requires user authentication.";
+      break;
+    case "403":
+      msg = "Forbidden: The server understood the request, but it refuses to authorize it.";
+      break;
+    case "404":
+      msg = "Not Found: The server has not found anything matching the request URI. This is often caused by a missing page or resource.";
+      break;
+    case "405":
+      msg = "Method Not Allowed: The method specified in the request is not allowed for the resource identified by the request URI.";
+      break;
+    case "429":
+      msg = "Too Many Requests: The user has sent too many requests in a given amount of time.";
+      break;
+    case "500":
+      msg = "Internal Server Error: The server encountered an unexpected condition that prevented it from fulfilling the request.";
+      break;
+    case "502":
+      msg = "Bad Gateway: The server, while acting as a gateway, received an invalid response from the upstream server it accessed to fulfill the request.";
+      break;
+    case "503":
+      msg = "Service Unavailable: The server is currently unable to handle the request due to temporary overload or maintenance.";
+      break;
+    case "504":
+      msg = "Gateway Timeout: The server, while acting as a gateway, did not receive a timely response from the upstream server.";
+      break;
+
+    default:
+      msg="Unknown status code"
+  }
+
+  const response ={
+    status: req.query.code,
+    message: msg
+  }
+
+  res.json(response)
+})
+
+
 /*
 Task:
 You need to create an API that helps users understand different HTTP status codes and their meanings.
